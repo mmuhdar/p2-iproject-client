@@ -13,18 +13,15 @@
       <p class="text-white text-md">{{ anime.title }}</p>
       <p class="text-white text-sm">{{ anime.episodes }} Episodes</p>
     </div>
-    <div class="flex gap-1 p-1">
-      <button
-        class="bg-main hover:bg-main-600 text-secondary rounded-lg w-full"
-      >
-        Edit
-      </button>
-      <button
-        class="bg-orange hover:bg-orange-600 text-white rounded-lg w-full"
-      >
-        Delete
-      </button>
-    </div>
+    <router-link :to="linkAdd">
+      <div class="flex">
+        <button
+          class="bg-main hover:bg-main-600 text-secondary rounded-lg w-full"
+        >
+          Add Episode
+        </button>
+      </div>
+    </router-link>
   </div>
 </template>
 
@@ -34,6 +31,7 @@ export default {
   data() {
     return {
       link: `/animes/${this.anime.id}`,
+      linkAdd: `/add-episode/${this.anime.id}`,
     };
   },
   props: ["anime"],

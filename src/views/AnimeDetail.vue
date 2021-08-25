@@ -38,7 +38,7 @@ export default {
   name: "AnimeDetail",
   data() {
     return {
-      link: "https://www.youtube.com/watch?v=CpPT2hHnZls",
+      link: "https://www.youtube.com/watch?v=arfDRUIZOiw",
     };
   },
   methods: {

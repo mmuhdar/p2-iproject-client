@@ -38,6 +38,9 @@ export default new Vuex.Store({
             params: {
               page,
             },
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
           });
           context.commit("SET_HOME_ANIMES", { data });
         } else if (title) {
@@ -45,6 +48,9 @@ export default new Vuex.Store({
             params: {
               page,
               title,
+            },
+            headers: {
+              access_token: localStorage.getItem("access_token"),
             },
           });
           context.commit("SET_HOME_ANIMES", { data });
@@ -57,7 +63,11 @@ export default new Vuex.Store({
     async getAnime(context, payload) {
       try {
         const { id } = payload;
-        const { data } = await instance.get(`/animes/${id}`);
+        const { data } = await instance.get(`/animes/${id}`, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
         context.commit("SET_ANIME_DETAIL", { data });
       } catch (err) {
         console.log(err);
@@ -68,10 +78,14 @@ export default new Vuex.Store({
       try {
         const { title } = payload;
         const { data } = await instance.get("/animes/search", {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
           params: {
             title,
           },
         });
+        vue.$toast.info("Wait please");
         context.commit("SET_JIKAN_ANIME", { data });
       } catch (err) {
         console.log(err);
@@ -81,13 +95,39 @@ export default new Vuex.Store({
     async postAnime(context, payload) {
       try {
         const { mal_id, title, type, episodes, image_url } = payload;
-        await instance.post(`/animes/${mal_id}`, {
-          title,
-          image_url,
-          type,
-          episodes,
-        });
+        await instance.post(
+          `animes/${mal_id}`,
+          {
+            title,
+            type,
+            episodes,
+            image_url,
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
+        vue.$toast.success(`Success add ${title}`);
         router.push({ name: "Home" });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async addEpisode(context, payload) {
+      try {
+        const { title, url, animeId } = payload;
+        await instance.post(`/episodes/${animeId}`, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          title,
+          videoUrl: url,
+        });
+        router.push({ name: "AnimeDetail", params: { id: animeId } });
+        vue.$toast.success(`Success add ${title}`);
       } catch (err) {
         console.log(err);
       }
