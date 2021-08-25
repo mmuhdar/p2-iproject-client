@@ -22,34 +22,13 @@
 </template>
 
 <script>
-import CardHome from "../components/CardHome.vue";
 import SearchHome from "../components/SearchHome.vue";
 export default {
-  name: "Home",
-  data() {
-    return {
-      perPage: 12,
-      limit: 6,
-    };
-  },
+  name: "AddEpisode",
   components: {
-    CardHome,
     SearchHome,
-  },
-  methods: {
-    pagination() {
-      this.$store.dispatch("getHomeAnimes", {
-        page: this.homeAnimes.currentPage,
-      });
-    },
-  },
-  computed: {
-    homeAnimes() {
-      return this.$store.state.homeAnimes;
-    },
-  },
-  created: function () {
-    this.$store.dispatch("getHomeAnimes", { page: 1 });
   },
 };
 </script>
+
+<style></style>

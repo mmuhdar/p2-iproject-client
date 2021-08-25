@@ -1,17 +1,19 @@
 <template>
-  <div class="p-2 bg-primary rounded-md">
-    <img
-      src="https://cdn.myanimelist.net/images/anime/1426/111248.jpg?s=8abf35da87707ea81557e0287f88eb76"
-      alt="barakamon"
-    />
-    <div class="flex justify-between items-center mt-1">
-      <p class="text-white text-lg">Barakamon</p>
-      <span class="flex justify-center bg-main rounded-xl w-1/4 text-secondary"
-        >TV</span
-      >
+  <div class="p-2 bg-primary rounded-md flex flex-col justify-between">
+    <router-link :to="link">
+      <div>
+        <img
+          :src="anime.image_url"
+          :alt="anime.title"
+          class="h-80 w-full rounded-lg z-0"
+        />
+      </div>
+    </router-link>
+    <div class="p-1">
+      <p class="text-white text-md">{{ anime.title }}</p>
+      <p class="text-white text-sm">{{ anime.episodes }} Episodes</p>
     </div>
-    <p class="text-white text-sm">12 Episodes</p>
-    <div class="flex gap-1 mt-2">
+    <div class="flex gap-1 p-1">
       <button
         class="bg-main hover:bg-main-600 text-secondary rounded-lg w-full"
       >
@@ -29,6 +31,12 @@
 <script>
 export default {
   name: "CardHome",
+  data() {
+    return {
+      link: `/animes/${this.anime.id}`,
+    };
+  },
+  props: ["anime"],
 };
 </script>
 
