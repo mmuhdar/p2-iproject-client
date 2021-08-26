@@ -10,6 +10,7 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import toastSetting from "./settings/toast";
 
+Vue.prototype.$baseEndpoint = "https://h-nime.herokuapp.com";
 Vue.use(Toast, toastSetting);
 Vue.use(LazyTube);
 Vue.use(VueTailwind, paginationSetting);

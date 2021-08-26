@@ -5,6 +5,7 @@ import AnimeDetail from "../views/AnimeDetail.vue";
 import AddAnime from "../views/AddAnime.vue";
 import Login from "../views/Login.vue";
 import AddEpisode from "../views/AddEpisode.vue";
+import Register from "../views/Register.vue";
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
     path: "/add-episode/:id",
     name: "AddEpisode",
     component: AddEpisode,
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
   },
 ];
 

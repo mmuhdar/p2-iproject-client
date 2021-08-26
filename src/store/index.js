@@ -77,6 +77,7 @@ export default new Vuex.Store({
     async searchAnime(context, payload) {
       try {
         const { title } = payload;
+        vue.$toast.info("Loading...");
         const { data } = await instance.get("/animes/search", {
           headers: {
             access_token: localStorage.getItem("access_token"),
@@ -85,10 +86,9 @@ export default new Vuex.Store({
             title,
           },
         });
-        vue.$toast.info("Wait please");
         context.commit("SET_JIKAN_ANIME", { data });
       } catch (err) {
-        console.log(err);
+        vue.$toast.error(`${err.response.data.message}`);
       }
     },
 
@@ -112,7 +112,7 @@ export default new Vuex.Store({
         vue.$toast.success(`Success add ${title}`);
         router.push({ name: "Home" });
       } catch (err) {
-        console.log(err);
+        vue.$toast.error(`${err.response.data.message}`);
       }
     },
 
@@ -146,6 +146,28 @@ export default new Vuex.Store({
         vue.$toast.success(`Login Success`);
       } catch (err) {
         vue.$toast.error(`Email/password invalid`);
+      }
+    },
+
+    async register(context, payload) {
+      try {
+        const { name, email, password } = payload;
+        const { data } = await instance.post(`/register`, {
+          name,
+          password,
+          email,
+        });
+        vue.$toast.success(`Success register ${data.email}`);
+        router.push({ name: "Login" });
+      } catch (err) {
+        const errors = err.response.data.message;
+        if (Array.isArray(errors)) {
+          errors.forEach((el) => {
+            vue.$toast.error(`${el}`);
+          });
+        } else {
+          vue.$toast.error(`${errors}`);
+        }
       }
     },
   },

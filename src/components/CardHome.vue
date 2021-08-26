@@ -17,6 +17,7 @@
       <div class="flex">
         <button
           class="bg-main hover:bg-main-600 text-secondary rounded-lg w-full"
+          v-show="isAdmin"
         >
           Add Episode
         </button>
@@ -32,9 +33,15 @@ export default {
     return {
       link: `/animes/${this.anime.id}`,
       linkAdd: `/add-episode/${this.anime.id}`,
+      isAdmin: false,
     };
   },
   props: ["anime"],
+  created() {
+    if (this.$store.state.role == "admin") {
+      this.isAdmin = true;
+    }
+  },
 };
 </script>
 

@@ -14,7 +14,7 @@
         "
       >
         <div>
-          <h1 class="flex justify-center font-bold text-3xl">Login</h1>
+          <h1 class="flex justify-center font-bold text-3xl">Register</h1>
         </div>
         <div class="mt-8">
           <form
@@ -22,7 +22,27 @@
             method="POST"
             class="flex flex-col"
             autocomplete="off"
+            @submit.prevent="registerHandler"
           >
+            <div class="pt-3 rounded">
+              <label class="block text-md font-bold mb-2">Name</label>
+              <input
+                v-model="name"
+                type="text"
+                class="
+                  bg-secondary
+                  border-b-4 border-gray-500
+                  focus:border-main
+                  text-white
+                  rounded
+                  w-full
+                  focus:outline-none
+                  shadow-2xl
+                  transition
+                  duration-500
+                "
+              />
+            </div>
             <div class="pt-3 rounded">
               <label class="block text-md font-bold mb-2">Email</label>
               <input
@@ -64,7 +84,6 @@
               />
             </div>
             <button
-              @click.prevent="loginHandler"
               class="
                 mt-5
                 h-10
@@ -73,15 +92,15 @@
                 hover:bg-main-600 hover:text-white
               "
             >
-              Login
+              Submit
             </button>
           </form>
         </div>
       </div>
       <div class="flex justify-center">
         <p class="text-white">
-          Dont have account yet ? Register
-          <router-link class="font-bold hover:text-main-600" to="/register"
+          Already registered ? Login
+          <router-link class="font-bold hover:text-main-600" to="/login"
             >Here</router-link
           >
         </p>
@@ -92,20 +111,22 @@
 
 <script>
 export default {
-  name: "Login",
+  name: "Register",
   data() {
     return {
+      name: "",
       email: "",
       password: "",
     };
   },
   methods: {
-    loginHandler() {
+    registerHandler() {
       const data = {
+        name: this.name,
         email: this.email,
         password: this.password,
       };
-      this.$store.dispatch("login", data);
+      this.$store.dispatch("register", data);
     },
   },
 };
